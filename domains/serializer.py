@@ -1,10 +1,12 @@
+import re
 from urllib.parse import urlparse
 
+from django.conf import settings
+
 from rest_framework import serializers as rest_serializer
+from ipware import get_client_ip
 
 from .models import UserLink, PeerLink, RawUserData
-
-from ipware import get_client_ip
 
 
 class ValidateDomain(object):
@@ -12,10 +14,14 @@ class ValidateDomain(object):
         url = urlparse(domain).netloc
         if url is None:
             raise rest_serializer.ValidationError('Invalid Url')
+        if re.match(settings.BLACKLIST_URLS, domain):
+            raise rest_serializer.ValidationError('blacklisted Url')
         return url
 
-
 class CreateInstance(object):
+    """
+    Common create class for user and peer models
+    """
     def create(self, validated_data):
         request = self.context['request']
         ip, is_routable = get_client_ip(request)

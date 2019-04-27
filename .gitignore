@@ -1,3 +1,5 @@
 .idea
 exoogle.db.sqlite3
 *__pycache__*
+annotations.tsv
+annotations.xml
