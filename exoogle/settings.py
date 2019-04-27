@@ -123,3 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+PEER_NORMALISATION_FACTOR = 10000
+USER_NORMALISATION_FACTOR = 10000
+
+PEER_FACTOR = 0.21
+USER_FACTOR = 0.09
+OFFSET_FACTOR = 0.7

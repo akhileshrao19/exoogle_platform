@@ -64,7 +64,7 @@ class UserSerializer(rest_serializer.Serializer, GetIp, ValidateDomain):
         fields = ('domain', 'ip')
 
     def create(self, attr):
-        if PeerLink.objects.filter(domain=attr['domain']).exists():
+        if PeerLink.objects.filter(domain__icontains=attr['domain']).exists():
             serializer = UserLinkSerializer(data=attr, context=self.context)
         else:
             serializer = RawUserDataSerializer(data=attr, context=self.context)
